@@ -1,0 +1,32 @@
+@import "./../index.scss";
+.Tabs {
+  width: 100%;
+}
+.TabList {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: $bgPrimary;
+  @include padding;
+  padding-left: 0;
+  padding-right: 0;
+}
+.Tab {
+  cursor: pointer;
+  height: 30px;
+  font-size: 30px;
+  font-weight: 900;
+  color: $light;
+  background-color: $primary;
+  @include border-standard;
+  @include button-click;
+  @include center-content;
+  @include padding;
+  width: 425px;
+  &:focus {
+    outline: none;
+  }
+  &.Tab-0 {
+    margin-right: calc(96vw - 920px);
+  }
+}

@@ -1,0 +1,112 @@
+@import "./../index.scss";
+
+.InputForm {
+  position: fixed;
+  width: 400px;
+  height: 976px;
+  left: calc(96vw - 400px);
+  top: 130px;
+  background-color: $bgPrimaryLight2;
+  @include border-standard;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  max-height: calc(100vh - 160px);
+  .InputWrapper {
+    width: 100%;
+    @include center-content;
+    label {
+      color: $bgPrimary;
+      font-size: 24px;
+    }
+  }
+  #InputText {
+    width: 85%;
+    height: 30px;
+    font-size: 30px;
+    @include border-standard;
+    border-radius: 20px;
+    padding: 10px;
+    &:focus {
+      outline: none;
+      border-color: $primary;
+    }
+  }
+  .MuiFormControlLabel-root {
+    display: block;
+  }
+  .MuiCheckbox-root {
+    transform: scale(1.5);
+  }
+  .MuiCheckbox-colorSecondary.Mui-checked {
+    color: $bgPrimary !important;
+    svg {
+      background-color: $primary;
+    }
+  }
+  .MuiFormControlLabel-label {
+    margin-left: 10px;
+    font-size: 21px;
+  }
+  .FormCheckboxes {
+    display: flex;
+    flex-direction: column;
+  }
+  .CryptButton {
+    width: 200px;
+    height: 60px;
+    padding: 15px;
+    @include center-content;
+    font-size: 35px;
+    color: $light;
+    background-color: $primary;
+    @include border-standard;
+    @include button-click;
+  }
+  .InputRegimeText {
+    font-size: 30px;
+    font-weight: bold;
+    color: $primary;
+    text-shadow: 2px 0 0 $light, -2px 0 0 $light, 0 2px 0 $light, 0 -2px 0 $light, 1px 1px $light, -1px -1px 0 $light,
+      1px -1px 0 $light, -1px 1px 0 $light;
+  }
+  .InputRegimeHeader {
+    @extend .InputRegimeText;
+    @include center-content;
+    font-size: 40px;
+    text-align: center;
+    padding: 20px;
+    height: 15%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: transparentize($primary, 0.7);
+  }
+  .InputRegime {
+    @include center-content;
+    position: relative;
+    width: 100%;
+    height: 35%;
+    box-sizing: border-box;
+
+    .RegimeDisabled {
+      cursor: pointer;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-color: transparentize($bgPrimary, 0.1);
+    }
+  }
+  .InputButtonContainer {
+    width: 100%;
+    height: 15%;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    @include center-content;
+    background-color: transparentize($primary, 0.7);
+  }
+}

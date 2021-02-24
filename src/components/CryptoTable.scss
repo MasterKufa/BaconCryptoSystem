@@ -1,0 +1,35 @@
+@import "./../index.scss";
+.ReactVirtualized__Table__row,
+.ReactVirtualized__Table__headerRow {
+  display: flex;
+}
+.CryptoTable {
+  position: fixed;
+  left: 3vw;
+  top: 130px;
+  overflow: hidden;
+  width: 400px;
+  @include border-standard;
+  color: $bgPrimary;
+  font-weight: 600;
+  max-height: calc(100vh - 160px);
+  overflow: auto;
+  overflow-x: hidden;
+
+  .ReactVirtualized__Table__headerColumn {
+    background-color: transparentize($primary, 0.3);
+    font-size: 28px;
+    color: $bgPrimary;
+    @include center-content;
+  }
+  .ReactVirtualized__Table__rowColumn {
+    @include center-content;
+    font-size: 22px;
+  }
+  .ReactVirtualized__Table__row:nth-child(2n) {
+    background-color: $bgPrimaryLight2;
+  }
+  .ReactVirtualized__Table__row:nth-child(2n - 1) {
+    background-color: #d3beba;
+  }
+}

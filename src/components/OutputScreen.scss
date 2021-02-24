@@ -1,0 +1,22 @@
+@import "./../index.scss";
+
+.OutputScreen {
+  position: fixed;
+  top: 130px;
+  left: calc(7.5vw + 400px);
+  background-color: $light;
+  width: calc(85vw - 800px);
+  height: 950px;
+  @include border-standard;
+  border-radius: 20px;
+  max-height: calc(100vh - 200px);
+  .EmptyOutputPlaceholder {
+    width: 100%;
+    height: 100%;
+    font-size: 2.6vh;
+    font-weight: 900;
+    @include center-content;
+    color: $primary;
+    text-align: center;
+  }
+}
