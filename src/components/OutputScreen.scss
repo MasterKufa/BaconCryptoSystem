@@ -1,6 +1,5 @@
 @import "./../index.scss";
-
-.OutputScreen {
+.OutputScreenWrapper{
   position: fixed;
   top: 130px;
   left: calc(7.5vw + 400px);
@@ -10,13 +9,109 @@
   @include border-standard;
   border-radius: 20px;
   max-height: calc(100vh - 200px);
+  padding: 25px;
+  box-sizing: border-box;
+  overflow: auto;
+} 
+.OutputScreen {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  color: $primary;
+  font-size: 24px;
+  row-gap: 5px;
+  
+  .StepHeader {
+    font-size: 50px;
+    color: $primary;
+    text-align: center;
+    flex-grow: 1;
+    margin: auto;
+    grid-column: 1 / 4;
+    height: 80px;
+    width: 95%;
+  }
+  .ErrorHeader{
+    @extend .StepHeader;
+    color: $alert;
+  }
+  .StepMoreHeader {
+    font-size: 30px;
+    color: $primary;
+    text-align: center;
+    flex-grow: 1;
+    margin: auto;
+    grid-column: 1 / 4;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  .StepBase {
+    background-color: $bgPrimaryLight;
+    color: $light;
+    border-color: $light;
+    height: auto !important;
+    text-align: center;
+    padding: 10px;
+  }
+  .StepFrom {
+    @extend .StepBase;
+    @extend .LetterStepperFrom;
+   
+  }
+  .StepArrow {
+    @extend .StepBase;
+    @extend .LetterStepperArrow;
+   
+  }
+  .StepResult {
+    @extend .StepBase;
+    @extend .LetterStepperResult;
+   
+  }
+  .LetterStepperFrom {
+    @include center-content;
+    border: 5px solid $bgPrimary;
+    grid-column: 1 / 2;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-right-width: 0;
+    height: 70px;
+  }
+  .LetterStepperArrow {
+    @include center-content;
+    border: 5px solid $bgPrimary;
+    grid-column: 2 / 3;
+    @include center-content;
+    background-image: url(./../assets/arrow.png);
+    background-size: 70px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-right-width: 0;
+    height: 70px;
+    
+  }
+  .empty{
+    grid-column: 1 / 4;
+    height: 25px;
+    width: 100%;
+  }
+  .LetterStepperResult {
+    @include center-content;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: 5px solid $bgPrimary;
+    grid-column: 3 / 4;
+    height: 70px;
+  }
   .EmptyOutputPlaceholder {
     width: 100%;
     height: 100%;
-    font-size: 2.6vh;
+    font-size: 24px;
     font-weight: 900;
     @include center-content;
     color: $primary;
     text-align: center;
+    grid-column: 1 / span 3;
   }
 }

@@ -3,18 +3,25 @@
 .ReactVirtualized__Table__headerRow {
   display: flex;
 }
-.CryptoTable {
+.TableWrapper {
   position: fixed;
   left: 3vw;
   top: 130px;
+  height: calc(100vh - 160px);
+  max-height: 981px;
+}
+.CryptoTable {
   overflow: hidden;
   width: 400px;
   @include border-standard;
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   color: $bgPrimary;
   font-weight: 600;
-  max-height: calc(100vh - 160px);
   overflow: auto;
   overflow-x: hidden;
+  height: calc(85% + 4px) !important;
 
   .ReactVirtualized__Table__headerColumn {
     background-color: transparentize($primary, 0.3);
@@ -25,6 +32,19 @@
   .ReactVirtualized__Table__rowColumn {
     @include center-content;
     font-size: 22px;
+    &[aria-colindex="2"]:hover,
+    &[aria-colindex="3"]:hover,
+    &[aria-colindex="4"]:hover {
+      background-color: transparentize($color: $primary, $amount: 0.5);
+      .EditIcon {
+        transform: scale(1.2);
+      }
+    }
+  }
+  .ReactVirtualized__Grid {
+    &:focus {
+      outline: none;
+    }
   }
   .ReactVirtualized__Table__row:nth-child(2n) {
     background-color: $bgPrimaryLight2;
@@ -32,4 +52,49 @@
   .ReactVirtualized__Table__row:nth-child(2n - 1) {
     background-color: #d3beba;
   }
+  .EditCell {
+    position: relative;
+    @include center-content;
+    flex-direction: row;
+    .CellEditInput {
+      width: calc(100% - 30px);
+      height: 100%;
+      background-color: $bgPrimaryLight2;
+      &:focus {
+        outline: none;
+      }
+    }
+    .EditIcon {
+      display: block;
+      width: 20px;
+      height: 20px;
+      margin-left: 3px;
+      background-size: contain;
+      background-image: url(./../assets/edit64.png);
+    }
+    .CellEditCancel {
+      display: block;
+      width: 10px;
+      height: 10px;
+      background-size: contain;
+      background-image: url(./../assets/cancel.png);
+    }
+    .CellEditCheck {
+      display: block;
+      width: 25px;
+      height: 25px;
+      background-size: contain;
+      background-image: url(./../assets/check.png);
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+}
+.error {
+  border: 1px solid red;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }

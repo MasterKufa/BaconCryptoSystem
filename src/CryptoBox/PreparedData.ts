@@ -42,7 +42,7 @@ of("b", "a")
   )
   .subscribe((x) => (PreK2 = x))
 const RussianLetters = [
-  "A",
+  "А",
   "Б",
   "В",
   "Г",
@@ -77,32 +77,32 @@ const RussianLetters = [
   "Я"
 ]
 const EnglishCodes = [
-  "abbbb",
-  "babbb",
-  "bbabb",
-  "abbab",
-  "babba",
-  "ababb",
-  "aabab",
-  "baaba",
-  "bbaab",
-  "abbaa",
-  "aabba",
-  "aaabb",
-  "aaaab",
-  "aaaaa",
-  "baaaa",
-  "bbaaa",
-  "bbbaa",
-  "abbba",
-  "aabbb",
-  "baabb",
-  "abaab",
-  "aabaa",
-  "aaaba",
-  "baaab",
-  "abaaa",
-  "babaa"
+  "aabbbb",
+  "ababbb",
+  "abbabb",
+  "aabbab",
+  "ababba",
+  "aababb",
+  "aaabab",
+  "abaaba",
+  "abbaab",
+  "aabbaa",
+  "aaabba",
+  "aaaabb",
+  "aaaaab",
+  "aaaaaa",
+  "abaaaa",
+  "abbaaa",
+  "abbbaa",
+  "aabbba",
+  "aaabbb",
+  "abaabb",
+  "aabaab",
+  "aaabaa",
+  "aaaaba",
+  "abaaab",
+  "aabaaa",
+  "ababaa"
 ]
 // console.log(encryptLetterStep1("C", EnglishLetters, EnglishCodes))
 // console.log(encryptLetterStep2("bbabb", EnglishLetters, PreK1))

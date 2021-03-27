@@ -34,29 +34,10 @@
       border-color: $primary;
     }
   }
-  .MuiFormControlLabel-root {
-    display: block;
-  }
-  .MuiCheckbox-root {
-    transform: scale(1.5);
-  }
-  .MuiCheckbox-colorSecondary.Mui-checked {
-    color: $bgPrimary !important;
-    svg {
-      background-color: $primary;
-    }
-  }
-  .MuiFormControlLabel-label {
-    margin-left: 10px;
-    font-size: 21px;
-  }
-  .FormCheckboxes {
-    display: flex;
-    flex-direction: column;
-  }
+
   .CryptButton {
     width: 200px;
-    height: 60px;
+    height: 40px;
     padding: 15px;
     @include center-content;
     font-size: 35px;
@@ -64,6 +45,7 @@
     background-color: $primary;
     @include border-standard;
     @include button-click;
+    cursor: pointer;
   }
   .InputRegimeText {
     font-size: 30px;
@@ -75,6 +57,7 @@
   .InputRegimeHeader {
     @extend .InputRegimeText;
     @include center-content;
+    
     font-size: 40px;
     text-align: center;
     padding: 20px;
@@ -85,10 +68,13 @@
   }
   .InputRegime {
     @include center-content;
+    justify-content: space-around;
     position: relative;
     width: 100%;
     height: 35%;
     box-sizing: border-box;
+    padding-top: 25px;
+    padding-bottom: 25px;
 
     .RegimeDisabled {
       cursor: pointer;
@@ -106,7 +92,55 @@
     height: 15%;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
+    border-top: 4px solid $primaryDark;
+    position: relative;
     @include center-content;
     background-color: transparentize($primary, 0.7);
+    .DuplicateCodeError {
+      @extend .errorHint;
+      position: absolute;
+      top: calc(50% + 35px);
+    }
+    .error {
+      opacity: 0.5;
+      pointer-events: none;
+      color: $alert;
+      border-color: $alert;
+    }
   }
+}
+.MuiFormControlLabel-root {
+  display: block;
+}
+.MuiCheckbox-root {
+  transform: scale(1.5);
+}
+.MuiCheckbox-colorSecondary.Mui-checked {
+  color: $bgPrimary !important;
+  svg {
+    background-color: $primary;
+  }
+}
+.MuiFormControlLabel-label {
+  margin-left: 10px;
+  font-size: 21px;
+}
+.FormCheckboxes {
+  display: flex;
+  flex-direction: column;
+}
+.hidden {
+  visibility: hidden;
+}
+.noDisplay {
+  display: none !important;
+}
+.errorHint {
+  color: $alert;
+  font-size: 18px;
+}
+.inputCryptError {
+  @extend .errorHint;
+  height: 25px;
+  display: block;
 }

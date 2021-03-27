@@ -4,7 +4,7 @@ $bgPrimaryLight2: #88a0a8;
 $primary: orange;
 $primaryDark: #865122;
 $light: floralwhite;
-$alert: red;
+$alert: rgb(189, 28, 28);
 
 body,
 html {
@@ -12,6 +12,7 @@ html {
   margin: 0;
   background-color: $bgPrimary;
   overflow: auto;
+  font-family: "Comic Sans MS Bold", arial;
 }
 
 ::-webkit-scrollbar-track {

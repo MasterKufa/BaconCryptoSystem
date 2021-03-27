@@ -20,15 +20,32 @@
   @extend .CryptName;
   left: calc(50vw - 192px);
 }
-
-.CryptAuthor {
+.BottomAnnotation{
+  @include border-standard;
+  background-color: $bgPrimaryLight2;
   color: $primary;
-
   font-size: 14px;
   font-weight: 400;
   position: fixed;
-  top: calc(100vh - 40px);
-  left: calc(50vw - 175px);
-  max-width: 350px;
+  top: calc(100vh - 65px);
+  left: calc(50vw - 225px);
+  width: 450px;
   text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 5px;
+  border-width: 0;
+  .helpSign{
+    @include button-click;
+    width: 60px;
+    height: 60px;
+    background: url(./../assets/help.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+  }
+}
+.CryptAuthor {
+ width: 350px;
 }
