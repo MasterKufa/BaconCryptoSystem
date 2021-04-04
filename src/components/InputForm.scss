@@ -34,7 +34,21 @@
       border-color: $primary;
     }
   }
-
+  #ContainerText{
+    width: 85%;
+  height:  150px;
+  font-size: 30px;
+  @include border-standard;
+  border-radius: 20px;
+  padding: 10px;
+  resize: none;
+  font-family: "Comic Sans MS Bold", arial!important;;
+  font-weight: 300!important;
+  &:focus {
+    outline: none;
+    border-color: $primary;
+  }
+  }
   .CryptButton {
     width: 200px;
     height: 40px;
@@ -66,7 +80,14 @@
     border-top-right-radius: 20px;
     background-color: transparentize($primary, 0.7);
   }
+  .StenoCheckboxes{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+  }
   .InputRegime {
+   
     @include center-content;
     justify-content: space-around;
     position: relative;
@@ -75,7 +96,6 @@
     box-sizing: border-box;
     padding-top: 25px;
     padding-bottom: 25px;
-
     .RegimeDisabled {
       cursor: pointer;
       position: absolute;
@@ -85,6 +105,10 @@
       height: 100%;
       z-index: 1;
       background-color: transparentize($bgPrimary, 0.1);
+    }
+    
+    &.Steno{
+      height: 70%;
     }
   }
   .InputButtonContainer {

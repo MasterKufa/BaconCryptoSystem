@@ -23,6 +23,13 @@
   @include center-content;
   @include padding;
   width: 425px;
+  &[aria-selected="true"]{
+      transform: scale(1.1);
+      transform-origin: center;
+  }
+  &[aria-selected="false"]{
+    opacity: 0.3;
+}
   &:focus {
     outline: none;
   }

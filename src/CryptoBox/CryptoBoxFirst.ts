@@ -16,7 +16,7 @@ export const decryptLetterStep2 = (letterCode: string, alphabet: string[], crypt
   if (index !== -1 && alphabet.length === cryptColumn.length) {
     return alphabet[index]
   }
-  return ""
+  return "?"
 }
 
 export const encryptLetterStep2 = (letterCode: string, alphabet: string[], cryptColumn: string[]): string => {

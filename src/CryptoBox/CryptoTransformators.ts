@@ -1,7 +1,11 @@
+import { Regime } from "../components/InputForm"
+import { CryptoTransformator } from "../redux/reducer"
+
 type MetaString = {
   text: string
   meta: any
 }
+
 type cryptTr = (sourceBin: string, container: string, mode: Modes) => MetaString
 type deCryptTr = (sourceCont: string, mode: Modes) => string
 enum Modes {
@@ -88,4 +92,21 @@ export function fontTransformatorDeCrypt(sourceCont: MetaString, mode: Modes): s
   } else {
     return "b"
   }
+}
+export const getTransformator = (type: CryptoTransformator, regime: Regime) => {
+  if (regime === "encrypt") {
+    switch (type) {
+      case CryptoTransformator.case:
+        return caseTransformatorCrypt
+      case CryptoTransformator.font:
+        return fontTransformatorCrypt
+      case CryptoTransformator.italic:
+        return cursiveTransformatorCrypt
+      case CryptoTransformator.color:
+        return colorTransformatorCrypt
+      default:
+        return caseTransformatorCrypt
+    }
+  }
+  return caseTransformatorCrypt
 }

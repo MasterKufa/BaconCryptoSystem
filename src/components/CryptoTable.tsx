@@ -1,22 +1,24 @@
 import cn from "classnames"
-import React, { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react"
+import React, { ChangeEvent, KeyboardEvent, useEffect, useLayoutEffect, useRef, useState } from "react"
 import ReactDOM from "react-dom"
 import { Provider, useDispatch, useSelector } from "react-redux"
 import { Table, Column, AutoSizer } from "react-virtualized"
 import { Subject } from "rxjs"
 import { EnglishCodes, EnglishLetters, PreK1, PreK2 } from "../CryptoBox/PreparedData"
 import { setCodes, setK1, setK2, setLetters } from "../redux/actions"
-import { State } from "../redux/reducer"
+import { Modes, State } from "../redux/reducer"
 import { store } from "../redux/store"
 import "./CryptoTable.scss"
 import { TablePreferences } from "./TablePreferences"
 
 const prepareRows = ({ index }: { index: number }) => {
+  const { Letters, LetterCodes, K1, K2 } = store.getState()
+  console.log("prepareRows")
   return {
-    letter: EnglishLetters[index],
-    code: EnglishCodes[index],
-    k1: PreK1[index],
-    k2: PreK2[index]
+    letter: Letters[index],
+    code: LetterCodes[index],
+    k1: K1[index],
+    k2: K2[index]
   }
 }
 type DataKeys = "K1" | "K2" | "LetterCodes"
@@ -31,6 +33,7 @@ const EDITABLE_COLUMNS = 3
 const dataKeys = ["K1", "K2", "LetterCodes"]
 const gen = (i: number) => `.ReactVirtualized__Table__rowColumn[aria-colindex="${i}"]`
 const StupidDecorator = () => {
+  console.log("StupidDecorator")
   const cells = document.querySelectorAll(`${gen(2)},${gen(3)},${gen(4)}`)
   if (cells && cells.length) {
     cells.forEach((cell, inx) => {
@@ -39,6 +42,7 @@ const StupidDecorator = () => {
         if (dataKeys.includes(x)) dataKey = x
       })
       const properInx = Math.floor(inx / EDITABLE_COLUMNS)
+      ReactDOM.unmountComponentAtNode(cell)
       ReactDOM.render(
         <Provider key={properInx} store={store}>
           <EditableLabel
@@ -118,6 +122,7 @@ const EditableLabel: React.FC<LabelProps> = ({ label, dataKey, inx }) => {
     }
   }
   const _isError = isError(labelInner, dataKey)
+  console.log(isEdit)
   return (
     <div onClick={onEditClick} className="EditCell">
       {isEdit ? (
@@ -142,9 +147,11 @@ const EditableLabel: React.FC<LabelProps> = ({ label, dataKey, inx }) => {
 }
 export const CryptoTable = () => {
   const { K1, K2, LetterCodes, mode, Letters } = useSelector<State, State>((s) => s)
-  useEffect(() => {
+  const columnW = mode === Modes.CRYPTO ? 100 : 200
+  useLayoutEffect(() => {
     StupidDecorator()
-  }, [mode])
+  })
+
   return (
     <div className="TableWrapper">
       <Table
@@ -153,13 +160,13 @@ export const CryptoTable = () => {
         height={836}
         headerHeight={56}
         rowHeight={30}
-        rowCount={26}
+        rowCount={Letters[0] === EnglishLetters[0] ? 26 : 33}
         rowGetter={prepareRows}
       >
-        <Column label="Символ" className={"Letters"} dataKey="letter" width={100} />
-        <Column width={100} label="Код" className={"LetterCodes"} dataKey="code" />
-        <Column width={100} label="K1" className={"K1"} dataKey="k1" />
-        <Column width={100} label="K2" className={"K2"} dataKey="k2" />
+        <Column label="Символ" className={"Letters"} dataKey="letter" width={columnW} />
+        <Column width={columnW} label="Код" className={"LetterCodes"} dataKey="code" />
+        {mode === Modes.CRYPTO && <Column width={columnW} label="K1" className={"K1"} dataKey="k1" />}
+        {mode === Modes.CRYPTO && <Column width={columnW} label="K2" className={"K2"} dataKey="k2" />}
       </Table>
       <TablePreferences />
     </div>

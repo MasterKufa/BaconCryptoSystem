@@ -76,7 +76,7 @@ const RussianLetters = [
   "Ю",
   "Я"
 ]
-const EnglishCodes = [
+let EnglishCodes = [
   "aabbbb",
   "ababbb",
   "abbabb",
@@ -104,6 +104,48 @@ const EnglishCodes = [
   "aabaaa",
   "ababaa"
 ]
+
+let RussianCodes = [
+  "aabbbb",
+  "ababbb",
+  "abbabb",
+  "aabbab",
+  "ababba",
+  "aababb",
+  "aaabab",
+  "abaaba",
+  "abbaab",
+  "aabbaa",
+  "aaabba",
+  "aaaabb",
+  "aaaaab",
+  "aaaaaa",
+  "abaaaa",
+  "abbaaa",
+  "abbbaa",
+  "aabbba",
+  "aaabbb",
+  "abaabb",
+  "aabaab",
+  "aaabaa",
+  "aaaaba",
+  "abaaab",
+  "aabaaa",
+  "ababaa",
+  "babbbb",
+  "bbabbb",
+  "bbbabb",
+  "babbab",
+  "bbabba",
+  "bababb",
+  "baabab"
+]
+export const setRusCodes = (x: string[]) => {
+  RussianCodes = x
+}
+export const setEngCodes = (x: string[]) => {
+  EnglishCodes = x
+}
 // console.log(encryptLetterStep1("C", EnglishLetters, EnglishCodes))
 // console.log(encryptLetterStep2("bbabb", EnglishLetters, PreK1))
 // console.log(decryptLetterStep1("ROEYQ", EnglishLetters, PreK1))
@@ -122,4 +164,4 @@ const EnglishCodes = [
 //   caseTransformatorCrypt
 // )("CAT", (x) => console.log(x))
 
-export { Modes, PreK1, PreK2, EnglishLetters, RussianLetters, EnglishCodes }
+export { Modes, PreK1, PreK2, EnglishLetters, RussianLetters, RussianCodes, EnglishCodes }

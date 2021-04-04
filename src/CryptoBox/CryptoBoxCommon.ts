@@ -5,7 +5,7 @@ export const encryptLetterStep1 = (letter: string, alphabet: string[], cryptColu
   if (index !== -1 && alphabet.length === cryptColumn.length) {
     return cryptColumn[index]
   }
-  return ""
+  return "?"
 }
 export const decryptLetterStep1 = (letterCode: string, alphabet: string[], cryptColumn: string[]): string => {
   if (!letterCode.length || alphabet.length !== cryptColumn.length) {

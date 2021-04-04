@@ -1,6 +1,7 @@
 import { uniq } from "ramda"
 import { of } from "rxjs"
 import { bufferCount } from "rxjs/operators"
+import { CryptoTransformator } from "../redux/reducer"
 import { encryptLetterStep1, decryptLetterStep1 } from "./CryptoBoxCommon"
 import { encryptLetterStep2, decryptLetterStep2 } from "./CryptoBoxFirst"
 

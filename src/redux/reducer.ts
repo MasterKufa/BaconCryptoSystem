@@ -1,6 +1,27 @@
 import { handleActions } from "redux-actions"
-import { EnglishCodes, EnglishLetters, PreK1, PreK2, RussianLetters } from "../CryptoBox/PreparedData"
-import { setCodes, setCryptInput, setDeCryptInput, setDecryptKey, setK1, setK2, setLetters, setMode } from "./actions"
+import {
+  EnglishCodes,
+  EnglishLetters,
+  PreK1,
+  PreK2,
+  RussianCodes,
+  RussianLetters,
+  setEngCodes,
+  setRusCodes
+} from "../CryptoBox/PreparedData"
+import {
+  openHelp,
+  setCodes,
+  setCryptInput,
+  setCryptoTransformator,
+  setDeCryptInput,
+  setDecryptKey,
+  setK1,
+  setK2,
+  setLetters,
+  setMode,
+  setStenoContainer
+} from "./actions"
 
 export enum Modes {
   CRYPTO,
@@ -9,6 +30,12 @@ export enum Modes {
 export enum DecryptKeys {
   K1,
   K2
+}
+export enum CryptoTransformator {
+  case = "case",
+  italic = "italic",
+  color = "color",
+  font = "font"
 }
 export type State = {
   mode: Modes
@@ -19,6 +46,9 @@ export type State = {
   Letters: string[]
   CryptInput: string
   DeCryptInput: string
+  isHelpOpened: boolean
+  cryptoTransformator: CryptoTransformator
+  stenoContainer: string
 }
 export const defaultState: State = {
   mode: Modes.CRYPTO,
@@ -28,7 +58,10 @@ export const defaultState: State = {
   LetterCodes: EnglishCodes,
   Letters: EnglishLetters,
   CryptInput: "",
-  DeCryptInput: ""
+  DeCryptInput: "",
+  isHelpOpened: false,
+  cryptoTransformator: CryptoTransformator.case,
+  stenoContainer: ""
 }
 
 export const reducer = handleActions<any, any>(
@@ -37,6 +70,11 @@ export const reducer = handleActions<any, any>(
       ...state,
       mode: payload
     }),
+    [openHelp as any]: (state, { payload }) => ({
+      ...state,
+      isHelpOpened: payload
+    }),
+
     [setK1 as any]: (state, { payload }) => {
       console.log(state, payload)
       return {
@@ -52,6 +90,14 @@ export const reducer = handleActions<any, any>(
       ...state,
       CryptInput: payload
     }),
+    [setCryptoTransformator as any]: (state, { payload }) => ({
+      ...state,
+      cryptoTransformator: payload
+    }),
+    [setStenoContainer as any]: (state, { payload }) => ({
+      ...state,
+      stenoContainer: payload
+    }),
     [setDeCryptInput as any]: (state, { payload }) => ({
       ...state,
       DeCryptInput: payload
@@ -64,10 +110,19 @@ export const reducer = handleActions<any, any>(
       ...state,
       LetterCodes: payload
     }),
-    [setLetters as any]: (state, { payload }) => ({
-      ...state,
-      Letters: payload
-    })
+    [setLetters as any]: (state, { payload }) => {
+      if (state.Letters[0] === EnglishLetters[0]) {
+        setEngCodes(state.LetterCodes)
+      }
+      if (state.Letters[0] === RussianLetters[0]) {
+        setRusCodes(state.LetterCodes)
+      }
+      console.log("setLetters", payload)
+      return {
+        ...state,
+        Letters: payload
+      }
+    }
   },
   defaultState
 )
