@@ -10,6 +10,11 @@
   height: calc(100vh - 160px);
   max-height: 981px;
 }
+.TablePane {
+  overflow: overlay;
+  overflow-x: hidden;
+  height: calc(85% + 4px) !important;
+}
 .CryptoTable {
   overflow: hidden;
   width: 400px;
@@ -19,22 +24,28 @@
   border-bottom-right-radius: 0;
   color: $bgPrimary;
   font-weight: 600;
-  overflow: auto;
-  overflow-x: hidden;
-  height: calc(85% + 4px) !important;
 
   .ReactVirtualized__Table__headerColumn {
     background-color: transparentize($primary, 0.3);
-    font-size: 28px;
+    font-size: 27px;
+    height: 47px;
     color: $bgPrimary;
-    @include center-content;
+    &:first-child {
+      border-top-left-radius: 15px;
+    }
+    &:last-child {
+      border-top-right-radius: 15px;
+    }
   }
+
   .ReactVirtualized__Table__rowColumn {
-    @include center-content;
     font-size: 22px;
-    &[aria-colindex="2"]:hover,
-    &[aria-colindex="3"]:hover,
-    &[aria-colindex="4"]:hover {
+    height: 28px;
+    text-align: center;
+    cursor: pointer;
+    &:nth-child(2):hover,
+    &:nth-child(3):hover,
+    &:nth-child(4):hover {
       background-color: transparentize($color: $primary, $amount: 0.5);
       .EditIcon {
         transform: scale(1.2);
@@ -49,8 +60,11 @@
   .ReactVirtualized__Table__row:nth-child(2n) {
     background-color: $bgPrimaryLight2;
   }
-  .ReactVirtualized__Table__row:nth-child(2n - 1) {
+  .ReactVirtualized__Table__row:nth-child(2n + 1) {
     background-color: #d3beba;
+  }
+  .ReactVirtualized__Table__row.ReactVirtualized__Table__headerRow {
+    background-color: transparent;
   }
   .EditCell {
     position: relative;

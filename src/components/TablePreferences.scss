@@ -3,24 +3,24 @@
 .TablePreferences {
   background-color: rgb(172, 162, 117);
   height: calc(15% - 12px);
-  width: 408px;
+  width: 414px;
   @include border-standard;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   padding: 15px;
   box-sizing: border-box;
   @include center-content;
-  .PrefButton {
-    cursor: pointer;
-    margin: 2px;
-    width: 300px;
-    height: 20px;
-    padding: 10px;
-    @include center-content;
-    font-size: 20px;
-    color: $light;
-    background-color: $primary;
-    @include border-standard;
-    @include button-click;
-  }
+}
+.PrefButton {
+  cursor: pointer;
+  margin: 2px;
+  width: 300px;
+  height: 20px;
+  padding: 10px;
+  @include center-content;
+  font-size: 20px;
+  color: $light;
+  background-color: $primary;
+  @include border-standard;
+  @include button-click;
 }

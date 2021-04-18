@@ -1,5 +1,5 @@
 import cn from "classnames"
-import React, { ChangeEvent, KeyboardEvent, useEffect, useLayoutEffect, useRef, useState } from "react"
+import React, { ChangeEvent, KeyboardEvent, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import ReactDOM from "react-dom"
 import { Provider, useDispatch, useSelector } from "react-redux"
 import { Table, Column, AutoSizer } from "react-virtualized"
@@ -10,17 +10,8 @@ import { Modes, State } from "../redux/reducer"
 import { store } from "../redux/store"
 import "./CryptoTable.scss"
 import { TablePreferences } from "./TablePreferences"
+import { useTable } from "react-table"
 
-const prepareRows = ({ index }: { index: number }) => {
-  const { Letters, LetterCodes, K1, K2 } = store.getState()
-  console.log("prepareRows")
-  return {
-    letter: Letters[index],
-    code: LetterCodes[index],
-    k1: K1[index],
-    k2: K2[index]
-  }
-}
 type DataKeys = "K1" | "K2" | "LetterCodes"
 type LabelProps = {
   label: string
@@ -31,32 +22,7 @@ const getInnerText = (str: string) => str.replaceAll(/<.*>/g, "")
 
 const EDITABLE_COLUMNS = 3
 const dataKeys = ["K1", "K2", "LetterCodes"]
-const gen = (i: number) => `.ReactVirtualized__Table__rowColumn[aria-colindex="${i}"]`
-const StupidDecorator = () => {
-  console.log("StupidDecorator")
-  const cells = document.querySelectorAll(`${gen(2)},${gen(3)},${gen(4)}`)
-  if (cells && cells.length) {
-    cells.forEach((cell, inx) => {
-      let dataKey = ""
-      cell.classList.forEach((x) => {
-        if (dataKeys.includes(x)) dataKey = x
-      })
-      const properInx = Math.floor(inx / EDITABLE_COLUMNS)
-      ReactDOM.unmountComponentAtNode(cell)
-      ReactDOM.render(
-        <Provider key={properInx} store={store}>
-          <EditableLabel
-            key={properInx}
-            label={getInnerText(cell.innerHTML)}
-            dataKey={dataKey as any}
-            inx={properInx}
-          />
-        </Provider>,
-        cell
-      )
-    })
-  }
-}
+
 const isError = (str: string, type: DataKeys): boolean => {
   const opts = ["a", "b"]
   if (type === "LetterCodes") {
@@ -122,7 +88,6 @@ const EditableLabel: React.FC<LabelProps> = ({ label, dataKey, inx }) => {
     }
   }
   const _isError = isError(labelInner, dataKey)
-  console.log(isEdit)
   return (
     <div onClick={onEditClick} className="EditCell">
       {isEdit ? (
@@ -147,28 +112,113 @@ const EditableLabel: React.FC<LabelProps> = ({ label, dataKey, inx }) => {
 }
 export const CryptoTable = () => {
   const { K1, K2, LetterCodes, mode, Letters } = useSelector<State, State>((s) => s)
-  const columnW = mode === Modes.CRYPTO ? 100 : 200
-  useLayoutEffect(() => {
-    StupidDecorator()
-  })
+  const prepareRows = () =>
+    Letters.map((item, inx) => ({
+      letter: item,
+      code: <EditableLabel key={"c" + item} dataKey="LetterCodes" label={LetterCodes[inx]} inx={inx} />,
+      k1: <EditableLabel key={"k1" + item} dataKey="K1" label={K1[inx]} inx={inx} />,
+      k2: <EditableLabel key={"k2" + item} dataKey="K2" label={K2[inx]} inx={inx} />
+    }))
+  const columns = useMemo(
+    () =>
+      [
+        {
+          Header: "Символ",
+          accessor: "letter"
+        },
+        {
+          Header: "Код",
+          accessor: "code"
+        }
+      ].concat(
+        mode === Modes.CRYPTO
+          ? [
+              {
+                Header: "K1",
+                accessor: "k1"
+              },
+              {
+                Header: "K2",
+                accessor: "k2"
+              }
+            ]
+          : []
+      ),
+    [mode]
+  )
+  const data = useMemo(() => prepareRows(), [Letters, LetterCodes, K1, K2])
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({ columns, data } as any)
 
   return (
     <div className="TableWrapper">
-      <Table
-        className="CryptoTable"
-        width={400}
-        height={836}
-        headerHeight={56}
-        rowHeight={30}
-        rowCount={Letters[0] === EnglishLetters[0] ? 26 : 33}
-        rowGetter={prepareRows}
-      >
-        <Column label="Символ" className={"Letters"} dataKey="letter" width={columnW} />
-        <Column width={columnW} label="Код" className={"LetterCodes"} dataKey="code" />
-        {mode === Modes.CRYPTO && <Column width={columnW} label="K1" className={"K1"} dataKey="k1" />}
-        {mode === Modes.CRYPTO && <Column width={columnW} label="K2" className={"K2"} dataKey="k2" />}
-      </Table>
+      <div className="TablePane">
+        <table className="CryptoTable" {...getTableProps()}>
+          <thead>
+            {headerGroups.map((headerGroup) => (
+              <tr
+                className="ReactVirtualized__Table__row ReactVirtualized__Table__headerRow"
+                {...headerGroup.getHeaderGroupProps()}
+              >
+                {headerGroup.headers.map((column) => (
+                  <th
+                    {...column.getHeaderProps()}
+                    className="ReactVirtualized__Table__headerColumn"
+                    style={{
+                      width: mode === Modes.CRYPTO ? "100px" : "200px"
+                    }}
+                  >
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row)
+              return (
+                <tr className="ReactVirtualized__Table__row" {...row.getRowProps()}>
+                  {row.cells.map((cell) => {
+                    return (
+                      <td
+                        {...cell.getCellProps()}
+                        style={{
+                          width: mode === Modes.CRYPTO ? "100px" : "200px"
+                        }}
+                        className="ReactVirtualized__Table__rowColumn"
+                      >
+                        {cell.render("Cell")}
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
       <TablePreferences />
     </div>
   )
+  // }
+  //   return (
+  //     <div className="TableWrapper">
+
+  //       <Table
+  //         className="CryptoTable"
+  //         width={400}
+  //         height={836}
+  //         headerHeight={56}
+  //         rowHeight={30}
+  //         rowCount={Letters[0] === EnglishLetters[0] ? 26 : 33}
+  //         rowGetter={prepareRows}
+  //       >
+  //         <Column label="Символ" className={"Letters"} dataKey="letter" width={columnW} />
+  //         <Column width={columnW} label="Код" className={"LetterCodes"} dataKey="code" />
+  //         {mode === Modes.CRYPTO && <Column width={columnW} label="K1" className={"K1"} dataKey="k1" />}
+  //         {mode === Modes.CRYPTO && <Column width={columnW} label="K2" className={"K2"} dataKey="k2" />}
+  //       </Table>
+  //       <TablePreferences />
+  //     </div>
+  //   )
 }

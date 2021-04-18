@@ -1,5 +1,5 @@
 @import "./../index.scss";
-.OutputScreenWrapper{
+.OutputScreenWrapper {
   position: fixed;
   top: 130px;
   left: calc(7.5vw + 400px);
@@ -12,7 +12,7 @@
   padding: 25px;
   box-sizing: border-box;
   overflow: auto;
-} 
+}
 .OutputScreen {
   width: 100%;
   height: 100%;
@@ -21,7 +21,7 @@
   color: $primary;
   font-size: 24px;
   row-gap: 5px;
-  
+
   .StepHeader {
     font-size: 50px;
     color: $primary;
@@ -32,7 +32,7 @@
     height: 80px;
     width: 95%;
   }
-  .ErrorHeader{
+  .ErrorHeader {
     @extend .StepHeader;
     color: $alert;
   }
@@ -57,17 +57,18 @@
   .StepFrom {
     @extend .StepBase;
     @extend .LetterStepperFrom;
-   
   }
   .StepArrow {
     @extend .StepBase;
     @extend .LetterStepperArrow;
-   
   }
   .StepResult {
     @extend .StepBase;
     @extend .LetterStepperResult;
-   
+  }
+  .StepResultTotal {
+    @extend .StepResult;
+    //display: block !important;
   }
   .LetterStepperFrom {
     @include center-content;
@@ -89,9 +90,8 @@
     background-position: center;
     border-right-width: 0;
     height: 70px;
-    
   }
-  .empty{
+  .empty {
     grid-column: 1 / 4;
     height: 25px;
     width: 100%;
@@ -114,4 +114,28 @@
     text-align: center;
     grid-column: 1 / span 3;
   }
+}
+.italic {
+  font-style: italic;
+}
+.normal {
+  font-style: normal;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.lowercase {
+  text-transform: lowercase;
+}
+.red {
+  color: red;
+}
+.black {
+  color: black;
+}
+.TNR {
+  font-family: "Times New Roman";
+}
+.Arial {
+  font-family: Arial;
 }

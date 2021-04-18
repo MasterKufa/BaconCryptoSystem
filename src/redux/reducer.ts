@@ -16,6 +16,7 @@ import {
   setCryptoTransformator,
   setDeCryptInput,
   setDecryptKey,
+  setFalsyMessage,
   setK1,
   setK2,
   setLetters,
@@ -49,6 +50,7 @@ export type State = {
   isHelpOpened: boolean
   cryptoTransformator: CryptoTransformator
   stenoContainer: string
+  FalsyMessage: string
 }
 export const defaultState: State = {
   mode: Modes.CRYPTO,
@@ -61,14 +63,23 @@ export const defaultState: State = {
   DeCryptInput: "",
   isHelpOpened: false,
   cryptoTransformator: CryptoTransformator.case,
-  stenoContainer: ""
+  stenoContainer: "",
+  FalsyMessage: ""
 }
 
 export const reducer = handleActions<any, any>(
   {
-    [setMode as any]: (state, { payload }) => ({
+    [setMode as any]: (state, { payload }) => {
+      return {
+        ...state,
+        mode: payload,
+        Letters: EnglishLetters,
+        LetterCodes: EnglishCodes
+      }
+    },
+    [setFalsyMessage as any]: (state, { payload }) => ({
       ...state,
-      mode: payload
+      FalsyMessage: payload
     }),
     [openHelp as any]: (state, { payload }) => ({
       ...state,

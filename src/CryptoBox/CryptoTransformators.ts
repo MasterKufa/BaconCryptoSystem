@@ -93,20 +93,17 @@ export function fontTransformatorDeCrypt(sourceCont: MetaString, mode: Modes): s
     return "b"
   }
 }
-export const getTransformator = (type: CryptoTransformator, regime: Regime) => {
-  if (regime === "encrypt") {
-    switch (type) {
-      case CryptoTransformator.case:
-        return caseTransformatorCrypt
-      case CryptoTransformator.font:
-        return fontTransformatorCrypt
-      case CryptoTransformator.italic:
-        return cursiveTransformatorCrypt
-      case CryptoTransformator.color:
-        return colorTransformatorCrypt
-      default:
-        return caseTransformatorCrypt
-    }
+export const getTransformator = (type: CryptoTransformator) => {
+  switch (type) {
+    case CryptoTransformator.case:
+      return caseTransformatorCrypt
+    case CryptoTransformator.font:
+      return fontTransformatorCrypt
+    case CryptoTransformator.italic:
+      return cursiveTransformatorCrypt
+    case CryptoTransformator.color:
+      return colorTransformatorCrypt
+    default:
+      return caseTransformatorCrypt
   }
-  return caseTransformatorCrypt
 }

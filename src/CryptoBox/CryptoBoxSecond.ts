@@ -37,11 +37,10 @@ export const secondRegimeCryptFactory = (
   }
   return (str: string, stepsNotifier: stepsNotifier): void => {
     const codeEx = codes.find((x) => x)
-    if (!codeEx || str.length * codeEx.length < container.length) {
+    if (!codeEx || str.replaceAll(/\s/g, "").length * codeEx.length > container.replaceAll(/\s/g, "").length) {
       throw new Error("Маленький контейнер")
     }
     const activeCont = [...container].map((x) => ({ text: x, meta: null }))
-    let curIndex = 0
     const ntf = (x: string, y: string | MetaString, z: StepTypes) => {
       stepsNotifier({
         from: x,
@@ -49,20 +48,32 @@ export const secondRegimeCryptFactory = (
         stepType: z
       })
     }
-    ;[...str].forEach((x) => {
+    const firstStep: { x: string; let1: string }[] = []
+    const secondStep: { l: string; let2: { text: string; meta: null } }[] = []
+    let blanks = 0
+    let considerableLets = -1
+    ;[...str].forEach((x, i) => {
       const let1 = encryptLetterStep1(x, alphabet, codes)
-      ntf(x, let1, "letter1")
-      ;[...let1].forEach((l) => {
-        while (blank.test(activeCont[curIndex].text)) {
-          curIndex += 1
+      firstStep.push({ x: x, let1 })
+      if (let1 === "?") return
+      considerableLets++
+      ;[...let1].forEach((l, j) => {
+        let inxProto = considerableLets * 6 + j + blanks
+        while (activeCont[inxProto].text === " ") {
+          blanks++
+          inxProto = considerableLets * 6 + j + blanks
         }
-        activeCont[curIndex] = (literTransformator as cryptTr)(l, activeCont[curIndex].text, Modes.CRYPT)
-
-        ntf(l, activeCont[curIndex], "letter2")
-        curIndex += 1
+        activeCont[inxProto] = (literTransformator as cryptTr)(l, activeCont[inxProto].text, Modes.CRYPT)
+        secondStep.push({ l, let2: activeCont[inxProto] })
       })
     })
-    ntf(str, activeCont.slice(0, curIndex + 1) as any, "result")
+    const firstRes = firstStep.map((x) => x.let1).join("")
+    ntf(str, firstRes, "step1")
+    ;[...firstStep].forEach((x, i) => ntf(x.x, x.let1, "letter1"))
+    ntf(firstRes, secondStep.map((x) => x.let2) as any, "step2")
+    secondStep.forEach((x, i) => ntf(x.l, x.let2, "letter2"))
+
+    ntf(str, activeCont as any, "result")
   }
 }
 

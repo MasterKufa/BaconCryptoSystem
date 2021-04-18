@@ -10,10 +10,12 @@ import {
   setCryptoTransformator,
   setDeCryptInput,
   setDecryptKey,
+  setFalsyMessage,
+  setK2,
   setStenoContainer
 } from "../redux/actions"
 import { mapObjIndexed, uniq } from "ramda"
-import { firstRegimeCryptFactory } from "../CryptoBox/CryptoBoxFirst"
+import { defineFalsyK2, firstRegimeCryptFactory } from "../CryptoBox/CryptoBoxFirst"
 import { EnglishCodes, EnglishLetters, RussianLetters } from "../CryptoBox/PreparedData"
 import { Subject } from "rxjs"
 import { secondRegimeCryptFactory, secondRegimeDeCryptFactory } from "../CryptoBox/CryptoBoxSecond"
@@ -38,7 +40,8 @@ export const InputForm = () => {
     K1,
     K2,
     cryptoTransformator,
-    stenoContainer
+    stenoContainer,
+    FalsyMessage
   } = useSelector<State, State>((s) => s)
   const dispatch = useDispatch()
   const [regime, setRegime] = useState<Regime>("encrypt")
@@ -67,25 +70,34 @@ export const InputForm = () => {
         1
       )(prepareInput(DeCryptInput), (x) => OutputSubject.next(x))
     }
-    // if (mode === Modes.STENO && regime === "encrypt") {
-    //   secondRegimeCryptFactory(Letters, LetterCodes, getTransformator(cryptoTransformator, regime))(
-    //     prepareInput(CryptInput),
-    //     6,
-    //     (x) => OutputSubject.next(x)
-    //   )
-    // }
+    if (mode === Modes.STENO) {
+      secondRegimeCryptFactory(
+        Letters,
+        LetterCodes,
+        prepareInput(stenoContainer),
+        getTransformator(cryptoTransformator)
+      )(prepareInput(CryptInput), (x) => OutputSubject.next(x))
+    }
   }
   const isCodeDuplicateError = LetterCodes.length !== uniq(LetterCodes).length
-  const hasOtherSymbols = [...CryptInput].some((x) => ![...EnglishLetters, " "].includes(x.toUpperCase()))
+  const isHasOtherSymbols = (x: string) => [...x].some((x) => ![...EnglishLetters, " "].includes(x.toUpperCase()))
+  const hasOtherSymbols = isHasOtherSymbols(CryptInput)
   const hasOtherSymbolsDecrypt = [...DeCryptInput].some((x) => ![...EnglishLetters, " ", "/"].includes(x.toUpperCase()))
   const hasOtherSymbolsSteno = [...CryptInput].some((x) => ![...Letters, " "].includes(x.toUpperCase()))
+  const hasOtherSymbolsStenoCont = [...stenoContainer].some(
+    (x) => ![...RussianLetters, ...EnglishLetters, " "].includes(x.toUpperCase())
+  )
   const minStenoLenCont = CryptInput.replaceAll(/\s/g, "").length * 6
   const StenoContainerLen = stenoContainer.length >= minStenoLenCont
+  const FalsyError =
+    FalsyMessage.length !== DeCryptInput.replaceAll(/\s/g, "").length / 6 || isHasOtherSymbols(FalsyMessage)
   const isRunError =
     isCodeDuplicateError ||
     (mode === Modes.CRYPTO && regime === "encrypt" && (!CryptInput || hasOtherSymbols)) ||
     (mode === Modes.CRYPTO && regime === "decrypt" && (!DeCryptInput || hasOtherSymbolsDecrypt)) ||
-    (mode === Modes.STENO && regime === "encrypt" && (!StenoContainerLen || hasOtherSymbolsSteno || !CryptInput))
+    (mode === Modes.STENO &&
+      regime === "encrypt" &&
+      (!StenoContainerLen || hasOtherSymbolsSteno || hasOtherSymbolsStenoCont || !CryptInput))
   return (
     <form
       onSubmit={(e) => {
@@ -93,8 +105,11 @@ export const InputForm = () => {
       }}
       className="InputForm"
     >
-      <div className="InputRegimeHeader">Выберите {mode === Modes.CRYPTO ? "режим и" : ""}параметры</div>
-      <div className={"InputRegime" + (mode === Modes.STENO ? " Steno" : "")} onClick={() => setNewRegime("encrypt")}>
+      <div className="InputRegimeHeader">Выберите {mode === Modes.CRYPTO ? "режим и " : ""}параметры</div>
+      <div
+        className={"InputRegime a" + (mode === Modes.STENO ? " StenoA" : "")}
+        onClick={() => setNewRegime("encrypt")}
+      >
         <div className={cn({ RegimeDisabled: regime !== "encrypt" && mode === Modes.CRYPTO })} />
         <div className="InputRegimeText">Зашифровать</div>
         <div className="InputWrapper">
@@ -109,7 +124,7 @@ export const InputForm = () => {
           <div className={cn("inputCryptError", { noDisplay: CryptInput })}>Не может быть пусто</div>
           <div
             className={cn("inputCryptError", {
-              noDisplay: !hasOtherSymbols
+              noDisplay: mode === Modes.STENO ? !hasOtherSymbolsSteno : !hasOtherSymbols
             })}
           >
             Уберите посторонние символы
@@ -117,7 +132,7 @@ export const InputForm = () => {
           <div className={cn("inputCryptError", { noDisplay: !CryptInput || hasOtherSymbols })}></div>
         </div>
         {mode === Modes.STENO && (
-          <div className="InputWrapper">
+          <div className="InputWrapper Cont">
             <label htmlFor="ContainerText">Контейнер</label>
             <textarea
               onChange={(x) => dispatch(setStenoContainer(x.target.value))}
@@ -130,7 +145,7 @@ export const InputForm = () => {
             </div>
             <div
               className={cn("inputCryptError", {
-                noDisplay: !hasOtherSymbolsSteno
+                noDisplay: !hasOtherSymbolsStenoCont
               })}
             >
               Уберите посторонние символы
@@ -139,7 +154,10 @@ export const InputForm = () => {
           </div>
         )}
       </div>
-      <div className="InputRegime" onClick={() => setNewRegime("decrypt")}>
+      <div
+        className={"InputRegime b" + (mode === Modes.STENO ? " StenoB" : "")}
+        onClick={() => setNewRegime("decrypt")}
+      >
         {mode === Modes.CRYPTO ? (
           <>
             <div className={cn({ RegimeDisabled: regime !== "decrypt" })} />
@@ -186,6 +204,27 @@ export const InputForm = () => {
               }
               label="Ключ 2"
             />
+            <label className="LabelFalsy" htmlFor="InputText">
+              Ложное сообщение
+            </label>
+            <div className="FalsyContainer">
+              <input
+                type="text"
+                onChange={(x) => dispatch(setFalsyMessage(x.target.value))}
+                value={FalsyMessage}
+                placeholder="Ложный текст"
+                id="InputTextFalsy"
+                className={cn({ error: FalsyError })}
+              />
+              <div
+                className={cn("PrefButton", {
+                  error: FalsyError
+                })}
+                onClick={() => dispatch(setK2(defineFalsyK2(DeCryptInput, FalsyMessage, Letters, LetterCodes, K2)))}
+              >
+                К2 ?
+              </div>
+            </div>
           </>
         ) : (
           <div className="StenoCheckboxes">

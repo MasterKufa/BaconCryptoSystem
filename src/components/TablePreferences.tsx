@@ -40,19 +40,6 @@ export const TablePreferences = () => {
           Англ. &lt;-=-&gt; Рус.
         </div>
       )}
-
-      {/* <FormControlLabel
-        control={
-          <Checkbox
-            size="medium"
-            checked={true}
-            onChange={() => {
-              dispatch({})
-            }}
-          />
-        }
-        label="Ключ 1"
-      /> */}
     </div>
   )
 }

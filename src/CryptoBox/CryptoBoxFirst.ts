@@ -113,3 +113,22 @@ export const firstRegimeCryptFactory = (alphabet: string[], codes: string[], ste
     }
   }
 }
+
+export const defineFalsyK2 = (
+  sourceMes: string,
+  falsyMes: string,
+  letters: string[],
+  letterCodes: string[],
+  curK2: string[]
+): string[] => {
+  const sourceUnits = sourceMes.split(/\s+/g)
+  ;[...falsyMes].forEach((letr, letrInx) => {
+    const longCode = letterCodes[letters.findIndex((y) => y.toUpperCase() === letr.toUpperCase())]
+    if (!longCode) return
+    ;[...longCode].forEach((ab, i) => {
+      const innerLetrInx = letters.findIndex((y) => y.toUpperCase() === sourceUnits[letrInx][i].toUpperCase())
+      curK2[innerLetrInx] = ab
+    })
+  })
+  return curK2
+}
