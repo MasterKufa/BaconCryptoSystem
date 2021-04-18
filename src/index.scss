@@ -14,7 +14,9 @@ html {
   overflow: auto;
   font-family: "Comic Sans MS Bold", arial;
 }
-
+body {
+  transform: scale3d(0.66);
+}
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-top-right-radius: 10px;
@@ -70,7 +72,23 @@ html {
     transform: scale(0.97);
   }
 }
-.MuiTypography-root{
-  font-family: "Comic Sans MS Bold", arial!important;
+.MuiTypography-root {
+  font-family: "Comic Sans MS Bold", arial !important;
+}
 
+@font-face {
+  font-family: "Comic Sans MS Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Comic Sans MS Bold"), local("ComicSansMS-Bold"),
+    url(https://allfont.es/cache/fonts/comic-sans-ms-bold_a1b80394f5a8455df4c4236b2f87345d.woff) format("woff"),
+    url(https://allfont.es/cache/fonts/comic-sans-ms-bold_a1b80394f5a8455df4c4236b2f87345d.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Comic Sans MS  Bold";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Comic Sans MS  Bold"), local("ComicSansMS-Bold"),
+    url(https://allfont.es/cache/fonts/comic-sans-ms-bold_a1b80394f5a8455df4c4236b2f87345d.woff) format("woff"),
+    url(https://allfont.es/cache/fonts/comic-sans-ms-bold_a1b80394f5a8455df4c4236b2f87345d.ttf) format("truetype");
 }
