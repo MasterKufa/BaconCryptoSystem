@@ -15,27 +15,61 @@
     position: relative;
     background-color: $bgPrimary;
     @include center-content;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    overflow-y: auto;
+    & > div,
+    .HelpNote > div {
+      margin-bottom: 10px;
+    }
     .closeCross {
       @include button-click;
       background: url(./../assets/cross.png);
       background-size: contain;
       width: 50px;
       height: 50px;
-      position: absolute;
-      top: 10px;
-      left: calc(100% - 60px);
+      position: fixed;
+      top: calc(10vh - 75px);
+      left: calc(90vw + 25px);
     }
   }
   .helpHeader {
     font-size: 60px;
     font-weight: bold;
     color: $primary;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
   }
   .HelpNote {
     font-size: 30px;
     color: $light;
     width: 100%;
+  }
+  .red {
+    color: red;
+  }
+  .ImageContainer {
+    @include padding;
+    @include border-standard;
+    @include center-content;
+    display: inline-flex;
+    border-color: $primary;
+    margin: 30px;
+    max-width: 40%;
+    position: relative;
+    justify-content: space-between;
+    .Image {
+      width: 100%;
+      max-height: 100%;
+      max-width: 100%;
+      display: block;
+    }
+    .Label {
+      font-size: 24px;
+      color: $primary;
+      text-align: center;
+    }
+  }
+  .insert {
+    display: flex;
+    justify-content: space-around;
   }
 }

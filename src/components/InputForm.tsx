@@ -156,7 +156,7 @@ export const InputForm = () => {
       </div>
       <div
         className={"InputRegime b" + (mode === Modes.STENO ? " StenoB" : "")}
-        onClick={() => setNewRegime("decrypt")}
+        onClick={mode === Modes.CRYPTO ? () => setNewRegime("decrypt") : undefined}
       >
         {mode === Modes.CRYPTO ? (
           <>

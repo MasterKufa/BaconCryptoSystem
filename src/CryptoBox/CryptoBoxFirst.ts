@@ -126,6 +126,7 @@ export const defineFalsyK2 = (
     const longCode = letterCodes[letters.findIndex((y) => y.toUpperCase() === letr.toUpperCase())]
     if (!longCode) return
     ;[...longCode].forEach((ab, i) => {
+      console.log(letr, longCode, sourceUnits[letrInx], sourceUnits[letrInx][i], ab)
       const innerLetrInx = letters.findIndex((y) => y.toUpperCase() === sourceUnits[letrInx][i].toUpperCase())
       curK2[innerLetrInx] = ab
     })

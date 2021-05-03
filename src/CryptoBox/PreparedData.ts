@@ -146,22 +146,5 @@ export const setRusCodes = (x: string[]) => {
 export const setEngCodes = (x: string[]) => {
   EnglishCodes = x
 }
-// console.log(encryptLetterStep1("C", EnglishLetters, EnglishCodes))
-// console.log(encryptLetterStep2("bbabb", EnglishLetters, PreK1))
-// console.log(decryptLetterStep1("ROEYQ", EnglishLetters, PreK1))
-// console.log(decryptLetterStep2("bbabb", EnglishLetters, EnglishCodes))
-// firstRegimeCryptFactory(EnglishLetters, EnglishCodes, PreK1, 0)("CAT DOG", (x) => console.log(x))
-// firstRegimeCryptFactory(
-//   EnglishLetters,
-//   EnglishCodes,
-//   PreK2,
-//   1
-// )("USGPS CTQVN QGHUZ/CYSFO ZGHBD LHUFP", (x) => console.log(x))
-// secondRegimeCryptFactory(
-//   EnglishLetters,
-//   EnglishCodes,
-//   "Hello o my hello yes",
-//   caseTransformatorCrypt
-// )("CAT", (x) => console.log(x))
 
 export { Modes, PreK1, PreK2, EnglishLetters, RussianLetters, RussianCodes, EnglishCodes }

@@ -57,18 +57,15 @@ export const OutputScreen = () => {
       bufferTime(100),
       filter((x: any[]) => !!x.length)
     ).subscribe((mes: any[]) => {
-      console.log("pipe", mes)
       if (mes.length && mes.some((x) => x.stepType === "clear")) setMessageStack([])
       setMessageStack((pr: Message[]) => [...pr, ...mes])
     })
   }, [])
-  console.log(messageStack)
   return (
     <div className="OutputScreenWrapper">
       <div className="OutputScreen">
         {messageStack.length ? (
           messageStack.map((m, i, arr) => {
-            console.log("m", m)
             if (m.from !== " ") {
               switch (m.stepType) {
                 case "step1":

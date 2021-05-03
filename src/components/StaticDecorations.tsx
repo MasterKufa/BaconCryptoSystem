@@ -1,7 +1,7 @@
 import React from "react"
 import { useDispatch } from "react-redux"
 import { openHelp } from "../redux/actions"
-import { Help } from "./Help"
+import { Alert, Help } from "./Help"
 import "./StaticDecorations.scss"
 
 export const Discriptions = () => {
@@ -16,6 +16,7 @@ export const Discriptions = () => {
         </div>
       </div>
       <Help />
+      <Alert />
     </>
   )
 }

@@ -10,6 +10,7 @@ import {
   setRusCodes
 } from "../CryptoBox/PreparedData"
 import {
+  openAlert,
   openHelp,
   setCodes,
   setCryptInput,
@@ -48,6 +49,7 @@ export type State = {
   CryptInput: string
   DeCryptInput: string
   isHelpOpened: boolean
+  isAlertOpened: boolean
   cryptoTransformator: CryptoTransformator
   stenoContainer: string
   FalsyMessage: string
@@ -61,7 +63,8 @@ export const defaultState: State = {
   Letters: EnglishLetters,
   CryptInput: "",
   DeCryptInput: "",
-  isHelpOpened: false,
+  isHelpOpened: true,
+  isAlertOpened: true,
   cryptoTransformator: CryptoTransformator.case,
   stenoContainer: "",
   FalsyMessage: ""
@@ -85,9 +88,11 @@ export const reducer = handleActions<any, any>(
       ...state,
       isHelpOpened: payload
     }),
-
+    [openAlert as any]: (state, { payload }) => ({
+      ...state,
+      isAlertOpened: payload
+    }),
     [setK1 as any]: (state, { payload }) => {
-      console.log(state, payload)
       return {
         ...state,
         K1: payload
@@ -128,7 +133,6 @@ export const reducer = handleActions<any, any>(
       if (state.Letters[0] === RussianLetters[0]) {
         setRusCodes(state.LetterCodes)
       }
-      console.log("setLetters", payload)
       return {
         ...state,
         Letters: payload
