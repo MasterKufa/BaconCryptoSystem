@@ -28,16 +28,16 @@ export const TablePreferences = () => {
         onClick={() => dispatch(setCodes(GenerateCodes(6, LetterCodes.length, ["a", "b"], true)))}
         className="PrefButton"
       >
-        Ген. Коды
+        Генерация Кодов
       </div>
       {mode === Modes.CRYPTO && (
         <div onClick={() => dispatch(setK1(GenerateCodes(1, LetterCodes.length, ["a", "b"])))} className="PrefButton">
-          Ген. К1
+          Генерация К1
         </div>
       )}
       {mode === Modes.STENO && (
         <div onClick={onAlphabetChange} className={cn("PrefButton", { disabled: isCodeDuplicateError })}>
-          Англ. &lt;-=-&gt; Рус.
+          Английский / Русский
         </div>
       )}
     </div>

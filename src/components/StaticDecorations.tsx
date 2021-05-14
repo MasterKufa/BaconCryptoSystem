@@ -11,9 +11,7 @@ export const Discriptions = () => {
       <div className="CryptShifr">Шифр Бэкона</div>
       <div className="BottomAnnotation">
         <div onClick={() => dispatch(openHelp(true))} className="helpSign" />
-        <div className="CryptAuthor">
-          Учебная программа разработана студентом НИЯУ МИФИ Группы С18-702 Калугер Романом
-        </div>
+        <div className="CryptAuthor">Программа разработана студентом НИЯУ МИФИ Группы С18-702 Калугер Романом</div>
       </div>
       <Help />
       <Alert />

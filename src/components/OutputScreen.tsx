@@ -94,7 +94,7 @@ export const OutputScreen = () => {
             }
           })
         ) : (
-          <div className="EmptyOutputPlaceholder">Здесь будут показаны этапы шифрования, наслаждайтесь!</div>
+          <div className="EmptyOutputPlaceholder">Здесь будут показаны этапы шифрования!</div>
         )}
       </div>
     </div>

@@ -161,13 +161,13 @@ export const InputForm = () => {
         {mode === Modes.CRYPTO ? (
           <>
             <div className={cn({ RegimeDisabled: regime !== "decrypt" })} />
-            <div className="InputRegimeText">Расшифровать</div>
+            <div className="InputRegimeText">Дешифровать</div>
             <label htmlFor="InputText">Исходное сообщение</label>
             <input
               type="text"
               onChange={(x) => dispatch(setDeCryptInput(x.target.value))}
               value={DeCryptInput}
-              placeholder="Текст для расшифровки"
+              placeholder="Текст для дешифрования"
               id="InputText"
             />
             <div className={cn("inputCryptError", { noDisplay: DeCryptInput })}>Не может быть пусто</div>
@@ -287,7 +287,7 @@ export const InputForm = () => {
             error: isRunError
           })}
         >
-          Поехали!
+          Ок
         </div>
         <div className={cn("DuplicateCodeError", { hidden: !isCodeDuplicateError })}>
           Колонка КОД содержит повторения

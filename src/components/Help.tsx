@@ -68,11 +68,11 @@ export const Help = () => {
               </div>
               <br />
               <div>
-                &ensp;&ensp;&ensp;Кнопка <span className="red">"Ген. Коды"</span> случайным образом перегенерирует
+                &ensp;&ensp;&ensp;Кнопка <span className="red">"Генерация Кодов"</span> случайным образом перегенерирует
                 шестизначный двухлитерный код в колонке <span className="red">"Код"</span>
               </div>
               <div>
-                &ensp;&ensp;&ensp;Кнопка <span className="red">"Ген. K1"</span> случайным образом перегенерирует
+                &ensp;&ensp;&ensp;Кнопка <span className="red">"Генерация K1"</span> случайным образом перегенерирует
                 двухлитерный код в колонке <span className="red">"K1"</span>
               </div>
               <div>
@@ -98,13 +98,13 @@ export const Help = () => {
               <div>- 6 символов для колонки "Код", 1 символ для ключей К1 и К2</div>
               <div>
                 <br />
-                &ensp;&ensp;&ensp; В правой части находится <span className="red">окно параметров</span> для
-                (Де)Шифрования (рис.8).{" "}
+                &ensp;&ensp;&ensp; В правой части находится <span className="red">окно параметров</span> для Шифрования
+                (рис.8).{" "}
                 <div className="insert">
                   <Image src={Cr8} label="Рис. 8" />
                 </div>
-                <span className="red">&ensp;&ensp;&ensp;Текущий режим Шифрование/Расшифрование</span> более яркий, для
-                переключения нажать на темную область другого режима
+                <span className="red">&ensp;&ensp;&ensp;Текущий режим</span> более яркий, для переключения нажать на
+                темную область другого режима
                 <div>
                   <br />
                   &ensp;&ensp;&ensp;При вводе в поля "Исходное сообщение" производятся{" "}
@@ -117,8 +117,8 @@ export const Help = () => {
                   снизу <span className="red">неактивной</span>
                   <br />
                   <br />
-                  &ensp;&ensp;&ensp;При <span className="red">расшифровании</span> есть возможность выбрать ключ для
-                  расшифровки, поставив галочку напротив <span className="red">К1 или К2</span>
+                  &ensp;&ensp;&ensp;При <span className="red">дешифровании</span> есть возможность выбрать ключ,
+                  поставив галочку напротив <span className="red">К1 или К2</span>
                   <br />
                   <br />
                 </div>

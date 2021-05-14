@@ -200,25 +200,4 @@ export const CryptoTable = () => {
       <TablePreferences />
     </div>
   )
-  // }
-  //   return (
-  //     <div className="TableWrapper">
-
-  //       <Table
-  //         className="CryptoTable"
-  //         width={400}
-  //         height={836}
-  //         headerHeight={56}
-  //         rowHeight={30}
-  //         rowCount={Letters[0] === EnglishLetters[0] ? 26 : 33}
-  //         rowGetter={prepareRows}
-  //       >
-  //         <Column label="Символ" className={"Letters"} dataKey="letter" width={columnW} />
-  //         <Column width={columnW} label="Код" className={"LetterCodes"} dataKey="code" />
-  //         {mode === Modes.CRYPTO && <Column width={columnW} label="K1" className={"K1"} dataKey="k1" />}
-  //         {mode === Modes.CRYPTO && <Column width={columnW} label="K2" className={"K2"} dataKey="k2" />}
-  //       </Table>
-  //       <TablePreferences />
-  //     </div>
-  //   )
 }
